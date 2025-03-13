@@ -1,0 +1,29 @@
+#pogi{
+    text-align: center;
+}
+
+.box-header h3{
+    margin: 0px;
+}
+
+.label-btn{
+    display: grid;
+    place-items: center;
+}
+
+#PL{
+    font-size: 20px;
+}
+
+.image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.image {
+    width: 484px;
+    height: 397px;
+    padding: 10px;
+}

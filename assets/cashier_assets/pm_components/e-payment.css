@@ -1,0 +1,120 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.gcash-popup{
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.gcash-popup-content{
+    height: 500px;
+    width: 350px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+
+.maya-popup{
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.maya-popup-content{
+    height: 500px;
+    width: 350px;
+    background: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.qrcode{
+    margin: 20px auto;
+    display: flex;
+    padding: 8px;
+    border: none;
+    justify-content: center;
+    
+}
+
+
+#qrcode{
+    width: 1000;
+    height: 1000;
+    align-items: center;
+}
+
+.scan{
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;   
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    text-shadow: gray;
+}
+
+.name{
+    text-align: center;
+}
+
+img{
+    display: flex;
+}
+.btn-paid{
+    background-color: #00a65a;
+    border: #008d4c;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    margin: 0;
+    border-radius: 5px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.btn-close{
+    background-color: #dd4b39; 
+    border-color: #d73925;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    margin: 0;
+    border-radius: 5px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}

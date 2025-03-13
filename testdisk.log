@@ -1,0 +1,91 @@
+
+
+Tue Aug  8 05:49:51 2023
+Command line: TestDisk
+
+TestDisk 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 5.15.0-1031-aws (#35-Ubuntu SMP Fri Feb 10 02:07:18 UTC 2023) x86_64
+Compiler: GCC 11.2
+ext2fs lib: 1.46.5, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.3
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop11 - 0 B - 0 sectors (RO), sector size=512
+Warning: can't get size for Disk /dev/loop12 - 0 B - 0 sectors, sector size=512
+Hard disk list
+Disk /dev/xvda - 32 GB / 30 GiB - CHS 3916 255 63, sector size=512
+Disk /dev/loop0 - 58 MB / 55 MiB - 114000 sectors (RO), sector size=512
+Disk /dev/loop1 - 26 MB / 24 MiB - 50816 sectors (RO), sector size=512
+Disk /dev/loop10 - 55 MB / 53 MiB - 109072 sectors (RO), sector size=512
+Disk /dev/loop2 - 66 MB / 63 MiB - 129672 sectors (RO), sector size=512
+Disk /dev/loop3 - 117 MB / 111 MiB - 229272 sectors (RO), sector size=512
+Disk /dev/loop4 - 52 MB / 49 MiB - 102072 sectors (RO), sector size=512
+Disk /dev/loop5 - 66 MB / 63 MiB - 129944 sectors (RO), sector size=512
+Disk /dev/loop6 - 66 MB / 63 MiB - 129936 sectors (RO), sector size=512
+Disk /dev/loop7 - 55 MB / 53 MiB - 109072 sectors (RO), sector size=512
+Disk /dev/loop8 - 25 MB / 24 MiB - 50352 sectors (RO), sector size=512
+Disk /dev/loop9 - 58 MB / 55 MiB - 113944 sectors (RO), sector size=512
+
+Partition table type (auto): EFI GPT
+Disk /dev/xvda - 32 GB / 30 GiB
+Partition table type: EFI GPT
+
+Analyse Disk /dev/xvda - 32 GB / 30 GiB - CHS 3916 255 63
+hdr_size=92
+hdr_lba_self=1
+hdr_lba_alt=62914559 (expected 62914559)
+hdr_lba_start=34
+hdr_lba_end=62914526
+hdr_lba_table=2
+hdr_entries=128
+hdr_entsz=128
+21686148 6449 6e6f 74 4e 65 65 64 45 46 49
+Current partition structure:
+ 1 P Linux filesys. data       227328   62914526   62687199
+14 P Unknown                     2048      10239       8192
+15 P EFI System                 10240     227327     217088
+
+search_part()
+Disk /dev/xvda - 32 GB / 30 GiB - CHS 3916 255 63
+FAT32 at 0/162/35
+FAT1 : 32-1701
+FAT2 : 1702-3371
+start_rootdir : 3372 root cluster : 2
+Data : 3372-217087
+sectors : 217088
+cluster_size : 1
+no_of_cluster : 213716 (2 - 213717)
+fat_length 1670 calculated 1670
+heads/cylinder 8 (FAT) != 255 (HD)
+sect/track 32 (FAT) != 63 (HD)
+
+FAT32 at 0/162/35
+FAT: cluster=2(0x2), pos=13612
+     EFI System                 10240     227327     217088 [EFI System Partition] [UEFI]
+     FAT32, blocksize=512, 111 MB / 106 MiB
+
+recover_EXT2: s_block_group_nr=0/239, s_mnt_count=2/4294967295, s_blocks_per_group=32768, s_inodes_per_group=16128
+recover_EXT2: s_blocksize=4096
+recover_EXT2: s_blocks_count 7835899
+recover_EXT2: part_size 62687192
+Filesystem created: Sat Mar 25 03:06:41 2023
+Last mount time:    Thu May 11 12:09:27 2023
+     Linux filesys. data       227328   62914519   62687192 [cloudimg-rootfs]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 32 GB / 29 GiB
+
+Results
+   P EFI System                 10240     227327     217088 [EFI System Partition] [UEFI]
+     FAT32, blocksize=512, 111 MB / 106 MiB
+   P Linux filesys. data       227328   62914519   62687192 [cloudimg-rootfs]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 32 GB / 29 GiB
+
+Hint for advanced users: dmsetup may be used if you prefer to avoid rewriting the partition table for the moment:
+echo "0 217088 linear /dev/xvda 10240" | dmsetup create test0
+echo "0 62687192 linear /dev/xvda 227328" | dmsetup create test1
+
+interface_write()
+ 1 P EFI System                 10240     227327     217088 [EFI System Partition] [UEFI]
+ 2 P Linux filesys. data       227328   62914519   62687192 [cloudimg-rootfs]
+simulate write!
+
+TestDisk exited normally.
