@@ -241,10 +241,20 @@
             value="<?php echo $details['discountType']; ?>">
           <input type="hidden" name="total_sales" class="form-control" value="<?php echo $details['totalSales']; ?>">
           <input type="hidden" name="paymentmode" class="form-control" value="<?php echo $details['paymode']; ?>">
+
+          <input type="hidden" name="salesamount" class="form-control" value="0">
+          <input type="hidden" name="origAmount" class="form-control" value="0">
+
+          <input type="hidden" name="netOfDisc" class="form-control" value="0">
+          <input type="hidden" name="netOfVat" class="form-control" value="0">
+          <input type="hidden" name="lessVat" class="form-control" value="0">
+          <input type="hidden" name="addNVat" class="form-control" value="0">
+            
+
           <div class="voucher-input-section">
             <div class="input-group">
               <label>Enter Voucher Code</label>
-              <input type="text" name="compcode" placeholder="e.g., COMP-2024-XXXX">
+              <input type="text" name="compcode" placeholder="e.g., COMP-2024-XXXX" required>
             </div>
             <a href="<?php echo base_url("touchpoint/payments") ?>" class="btn btn-danger">Cancel</a>
             <button type="submit" class="btn btn-verify">Verify Voucher</button>

@@ -23,15 +23,16 @@
                         <?php
                         date_default_timezone_set('Asia/Manila');
                         ?>
-                        <input type="date" class="form-control" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" required readonly>
+                        <input type="date" class="form-control" id="date" name="date"
+                            value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="cashier">Cashier</label>
                         <select class="form-control text-capitalize" id="cashier" name="cashier" required>
                             <option selected disabled>Select Cashier</option>
-                            <?php foreach($cashiers as $c): ?>
+                            <?php foreach ($cashiers as $c): ?>
                                 <option class="text-capitalize" value="<?php echo $c['id']; ?>" <?php echo ($c['id'] == $this->session->userdata('id')) ? 'selected' : ''; ?>>
-                                    <?php echo $c['username']; ?><?php echo ($c['id'] == $this->session->userdata('id')) ? ' (You)' : ''; ?>
+                                    <?php echo $c['username']; ?>    <?php echo ($c['id'] == $this->session->userdata('id')) ? ' (You)' : ''; ?>
                                 </option>
                             <?php endforeach; ?>
                             <!-- Add other cashier options as needed -->
@@ -41,18 +42,24 @@
                         <label for="terminal">Terminal</label>
                         <select class="form-control" id="terminal" name="terminal" required>
                             <option selected disabled>Select Terminal</option>
-                            <?php foreach($terminals as $t): ?>
+                            <?php foreach ($terminals as $t): ?>
                                 <option value="<?php echo $t['id']; ?>" <?php echo ($t['z_status'] == 1) ? 'disabled' : ''; ?>>
                                     <?php
-                                        echo $t['name']; 
-                                        echo ($t['z_status'] == 1) ? ' (Z Reading already printed)' : '';
+                                    echo $t['name'];
+                                    echo ($t['z_status'] == 1) ? ' (Z Reading already printed)' : '';
                                     ?>
                                 </option>
                             <?php endforeach; ?>
                             <!-- Add other terminal options as needed -->
                         </select>
                     </div>
-                    
+
+                    <!-- Added 3/17/25 -->
+                    <!-- <div class="form-group">
+                        <label for="actual-cash">Cash</label>
+                        <input type="number" class="form-control" id="actual-cash" name="actual_cash" placeholder="00.00" step="0.01" min="00.00">
+                    </div> -->
+
                     <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
                 </form>
             </div>

@@ -400,23 +400,23 @@ class Touchpoint extends Admin_Controller
                         }
 
                         // Display Results
-                        echo "<table border='1'>";
-                        echo "<tr><th>Description</th><th>Amount</th></tr>";
-                        echo "<tr><td>Total Sales (with VAT)</td><td>₱" . number_format($originalAmount, 2) . "</td></tr>";
-                        echo "<tr><td>Less VAT (12%)</td><td>₱" . number_format($OriginalVat, 2) . "</td></tr>";
-                        echo "<tr><td>Net of VAT</td><td>₱" . number_format($OriginalvatableSale, 2) . "</td></tr>";
-                        echo "<tr><td>Less Discount (" . ($discountPercentage * 100) . "%)</td><td>₱" . number_format($totalDiscount, 2) . "</td></tr>";
-                        echo "<tr><td>Net of Discount</td><td>₱" . number_format($netOfDiscount, 2) . "</td></tr>";
-                        echo "<tr><td>Add 12% VAT</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
-                        echo "<tr><td>Total Amount Due</td><td>₱" . number_format($amountDue, 2) . "</td></tr>";
-                        echo "<tr><td>Cash Received</td><td>₱50.00</td></tr>";
-                        echo "<tr><td>Cash Change</td><td>₱" . number_format(50 - $amountDue, 2) . "</td></tr>";
-                        echo "<tr><td>Vatable Sales</td><td>₱" . number_format($vatableSale, 2) . "</td></tr>";
-                        echo "<tr><td>VAT Amount</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
-                        echo "<tr><td>VAT-Exempt Sales</td><td>₱" . number_format($vatExempt, 2) . "</td></tr>";
-                        echo "<tr><td>Zero-Rated Sales</td><td>₱0.00</td></tr>";
-                        echo "<tr><td>Payment Method</td><td>Cash</td></tr>";
-                        echo "</table>";
+                        // echo "<table border='1'>";
+                        // echo "<tr><th>Description</th><th>Amount</th></tr>";
+                        // echo "<tr><td>Total Sales (with VAT)</td><td>₱" . number_format($originalAmount, 2) . "</td></tr>";
+                        // echo "<tr><td>Less VAT (12%)</td><td>₱" . number_format($OriginalVat, 2) . "</td></tr>";
+                        // echo "<tr><td>Net of VAT</td><td>₱" . number_format($OriginalvatableSale, 2) . "</td></tr>";
+                        // echo "<tr><td>Less Discount (" . ($discountPercentage * 100) . "%)</td><td>₱" . number_format($totalDiscount, 2) . "</td></tr>";
+                        // echo "<tr><td>Net of Discount</td><td>₱" . number_format($netOfDiscount, 2) . "</td></tr>";
+                        // echo "<tr><td>Add 12% VAT</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
+                        // echo "<tr><td>Total Amount Due</td><td>₱" . number_format($amountDue, 2) . "</td></tr>";
+                        // echo "<tr><td>Cash Received</td><td>₱50.00</td></tr>";
+                        // echo "<tr><td>Cash Change</td><td>₱" . number_format(50 - $amountDue, 2) . "</td></tr>";
+                        // echo "<tr><td>Vatable Sales</td><td>₱" . number_format($vatableSale, 2) . "</td></tr>";
+                        // echo "<tr><td>VAT Amount</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
+                        // echo "<tr><td>VAT-Exempt Sales</td><td>₱" . number_format($vatExempt, 2) . "</td></tr>";
+                        // echo "<tr><td>Zero-Rated Sales</td><td>₱0.00</td></tr>";
+                        // echo "<tr><td>Payment Method</td><td>Cash</td></tr>";
+                        // echo "</table>";
                     }
                     $details['discountPercentage'] = $discountPercentage;                       // 0.2 or 0.1
                     $details['discountAmount'] = $totalDiscount;                                // 10.71
@@ -433,7 +433,7 @@ class Touchpoint extends Admin_Controller
                     $details['lessVat'] = number_format($OriginalVat, 2); // 6.43
                     $details['addNVat'] = number_format($totalVat, 2); // 6.43
                     $details['originalAmount'] = number_format($originalAmount, 2);
-                    print_r($details);
+                    // print_r($details);
                     $this->data['details'] = $details;
                     $this->render_template("pos/cash_payment", $this->data);
 
@@ -491,23 +491,23 @@ class Touchpoint extends Admin_Controller
                         }
 
                         // Display Results
-                        echo "<table border='1'>";
-                        echo "<tr><th>Description</th><th>Amount</th></tr>";
-                        echo "<tr><td>Total Sales (with VAT)</td><td>₱" . number_format($originalAmount, 2) . "</td></tr>";
-                        echo "<tr><td>Less VAT (12%)</td><td>₱" . number_format($OriginalVat, 2) . "</td></tr>";
-                        echo "<tr><td>Net of VAT</td><td>₱" . number_format($OriginalvatableSale, 2) . "</td></tr>";
-                        echo "<tr><td>Less Discount (" . ($discountPercentage * 100) . "%)</td><td>₱" . number_format($totalDiscount, 2) . "</td></tr>";
-                        echo "<tr><td>Net of Discount</td><td>₱" . number_format($netOfDiscount, 2) . "</td></tr>";
-                        echo "<tr><td>Add 12% VAT</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
-                        echo "<tr><td>Total Amount Due</td><td>₱" . number_format($amountDue, 2) . "</td></tr>";
-                        echo "<tr><td>Cash Received</td><td>₱50.00</td></tr>";
-                        echo "<tr><td>Cash Change</td><td>₱" . number_format(50 - $amountDue, 2) . "</td></tr>";
-                        echo "<tr><td>Vatable Sales</td><td>₱" . number_format($vatableSale, 2) . "</td></tr>";
-                        echo "<tr><td>VAT Amount</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
-                        echo "<tr><td>VAT-Exempt Sales</td><td>₱" . number_format($vatExempt, 2) . "</td></tr>";
-                        echo "<tr><td>Zero-Rated Sales</td><td>₱0.00</td></tr>";
-                        echo "<tr><td>Payment Method</td><td>Cash</td></tr>";
-                        echo "</table>";
+                        // echo "<table border='1'>";
+                        // echo "<tr><th>Description</th><th>Amount</th></tr>";
+                        // echo "<tr><td>Total Sales (with VAT)</td><td>₱" . number_format($originalAmount, 2) . "</td></tr>";
+                        // echo "<tr><td>Less VAT (12%)</td><td>₱" . number_format($OriginalVat, 2) . "</td></tr>";
+                        // echo "<tr><td>Net of VAT</td><td>₱" . number_format($OriginalvatableSale, 2) . "</td></tr>";
+                        // echo "<tr><td>Less Discount (" . ($discountPercentage * 100) . "%)</td><td>₱" . number_format($totalDiscount, 2) . "</td></tr>";
+                        // echo "<tr><td>Net of Discount</td><td>₱" . number_format($netOfDiscount, 2) . "</td></tr>";
+                        // echo "<tr><td>Add 12% VAT</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
+                        // echo "<tr><td>Total Amount Due</td><td>₱" . number_format($amountDue, 2) . "</td></tr>";
+                        // echo "<tr><td>Cash Received</td><td>₱50.00</td></tr>";
+                        // echo "<tr><td>Cash Change</td><td>₱" . number_format(50 - $amountDue, 2) . "</td></tr>";
+                        // echo "<tr><td>Vatable Sales</td><td>₱" . number_format($vatableSale, 2) . "</td></tr>";
+                        // echo "<tr><td>VAT Amount</td><td>₱" . number_format($totalVat, 2) . "</td></tr>";
+                        // echo "<tr><td>VAT-Exempt Sales</td><td>₱" . number_format($vatExempt, 2) . "</td></tr>";
+                        // echo "<tr><td>Zero-Rated Sales</td><td>₱0.00</td></tr>";
+                        // echo "<tr><td>Payment Method</td><td>Cash</td></tr>";
+                        // echo "</table>";
                     }
 
                     $url = 'https://api02.apigateway.bdo.com.ph/v1/mpqr/generates';
@@ -585,9 +585,9 @@ class Touchpoint extends Admin_Controller
                     $details['originalAmount'] = number_format($originalAmount, 2);
 
                     // TESTING PURPOSES
-                    echo "<pre>";
-                    print_r($details);
-                    echo "</pre>";
+                    // echo "<pre>";
+                    // print_r($details);
+                    // echo "</pre>";
 
                     $this->data['details'] = $details;
                     $this->render_template("pos/ewallet_payment", $this->data);
@@ -656,7 +656,7 @@ class Touchpoint extends Admin_Controller
                         $ptuId = 1;
                         $companyData = $this->model_touchpoint->getOrganization($companyId);
                         $ptuData = $this->model_touchpoint->getPtu($ptuId);
-                        echo "<script>console.log(" . json_encode($ptuData) . ");</script>";
+                        // echo "<script>console.log(" . json_encode($ptuData) . ");</script>";
 
                         $company = array(
                             'company' => $companyData['name'],
@@ -772,7 +772,7 @@ class Touchpoint extends Admin_Controller
                         $transactionsData['ptu_num'] = $ptuData['BIR_SN'];
                         $transactionsData['ptu_date'] = $ptuData['issued_date'];
 
-                        echo json_encode($transactionsData);
+                        // echo json_encode($transactionsData);
                         $parkingData = array(
                             'id' => $this->input->post("parking_id"),
                             'paid_time' => $this->input->post("paymentTime"),
@@ -787,6 +787,15 @@ class Touchpoint extends Admin_Controller
                             'OR' => $OR
                         );
                         $this->model_touchpoint->updateCompany($updateComp);
+
+                        echo $remainingBalance;
+                        echo "<br>";
+                        echo $transactionsData['earned_amount'];
+                        echo "<br>";
+                        $remainingBalance = $remainingBalance + $transactionsData['earned_amount'];
+                        echo $remainingBalance;
+                        $remainingData = array('terminal_id' => $terminalId, 'id' => $cashDrawer['id'], 'remaining' => $remainingBalance);
+                        $this->model_touchpoint->updateDrawerBalance($remainingData);
 
                         /******** printing process    */
                         if ($postTransaction) {
@@ -814,7 +823,7 @@ class Touchpoint extends Admin_Controller
 
                             // refactored code
                             $receipt = array(
-                                'transactionId' => $postTransaction,
+                                'transactionId' => $OR,
                                 'entryTime' => $this->input->post("entryTime"),
                                 'paymentTime' => $this->input->post("paymentTime"),
                                 'parkingStay' => $this->input->post("parkingStay"),
@@ -901,8 +910,8 @@ class Touchpoint extends Admin_Controller
 
                             $receipt['zeroRated'] = 0;
                             $receipt['nonVat'] = $nonVatSales;
-                            echo "receipt: ";
-                            print_r($receipt);
+                            // echo "receipt: ";
+                            // print_r($receipt);
                             $this->data['receipt'] = $receipt;
                             $this->data['receiptData'] = json_encode($receipt);
 
@@ -976,7 +985,7 @@ class Touchpoint extends Admin_Controller
                                 $ptuId = 1;
                                 $companyData = $this->model_touchpoint->getOrganization($companyId);
                                 $ptuData = $this->model_touchpoint->getPtu($ptuId);
-                                echo "<script>console.log(" . json_encode($ptuData) . ");</script>";
+                                // echo "<script>console.log(" . json_encode($ptuData) . ");</script>";
 
                                 $company = array(
                                     'company' => $companyData['name'],
@@ -1052,7 +1061,7 @@ class Touchpoint extends Admin_Controller
                                         $transactionsData['net_of_vat'] = number_format($vatableSale, 2);
                                         $transactionsData['net_of_disc'] = number_format($netOfDisc, 2);
                                         $transactionsData['add_nvat'] = number_format($addNvat, 2);
-                                        echo $transactionsData['add_nvat'];
+                                        // echo $transactionsData['add_nvat'];
                                         if ($discountType == "naac") {
                                             $transactionsData['vat_exempt'] = number_format(0, 2);
                                             $transactionsData['net_of_disc'] = number_format($netOfDisc, 2);
@@ -1093,7 +1102,7 @@ class Touchpoint extends Admin_Controller
                                 $transactionsData['ptu_num'] = $ptuData['BIR_SN'];
                                 $transactionsData['ptu_date'] = $ptuData['issued_date'];
 
-                                echo json_encode($transactionsData);
+                                // echo json_encode($transactionsData);
                                 $parkingData = array(
                                     'id' => $this->input->post("parking_id"),
                                     'paid_time' => $this->input->post("paymentTime"),
@@ -1135,7 +1144,7 @@ class Touchpoint extends Admin_Controller
 
                                     // refactored code
                                     $receipt = array(
-                                        'transactionId' => $postTransaction,
+                                        'transactionId' => $OR,
                                         'entryTime' => $this->input->post("entryTime"),
                                         'paymentTime' => $this->input->post("paymentTime"),
                                         'parkingStay' => $this->input->post("parkingStay"),
@@ -1224,8 +1233,8 @@ class Touchpoint extends Admin_Controller
                                     $receipt['nonVat'] = $nonVatSales;
 
                                     // Testing purposes
-                                    echo "receipt: ";
-                                    print_r($receipt);
+                                    // echo "receipt: ";
+                                    // print_r($receipt);
 
                                     $this->data['receipt'] = $receipt;
                                     $this->data['receiptData'] = json_encode($receipt);
@@ -1277,6 +1286,21 @@ class Touchpoint extends Admin_Controller
 
                     $status = '';
 
+                    $nonVatSales = 0;
+                    $zeroRatedSales = 0;
+
+                    $originalAmount = $this->input->post("parking_amount");
+                    $discountType = $this->input->post('discount_type');
+                    $totalVat = $this->input->post('totalVat');
+                    $vatableSale = $this->input->post('vatableSale');
+                    //  $totalSales = $this->input->post("total_sales");
+                    $totalDiscount = $this->input->post("discountAmount");
+                    $amountAfterDiscounted = $this->input->post("total_sales");
+                    $totalSales = $this->input->post("salesamount");
+                    $netOfDisc = $this->input->post("netOfDisc");
+                    $lessVat = $this->input->post("lessVat");
+                    $addNvat = $this->input->post("addNVat");
+
                     if ($verifyCode['is_used'] == 1) {
 
                         $status = 'This code is already used.';
@@ -1302,6 +1326,15 @@ class Touchpoint extends Admin_Controller
                             'vehicleClass' => $this->input->post("vehicleClass"),
 
                         );
+
+                        $receipt['vatExempt'] = 0; // Regular transactions not VAT-exempt
+                        $receipt['lessVat'] = round(0, 2);
+                        $receipt['vatAmount'] = round($totalVat, 2);
+                        $receipt['vatableSales'] = round($vatableSale, 2);
+
+                        $receipt['netofdisc'] = number_format(0, 2);
+                        $receipt['netOfVat'] = number_format(0, 2);
+                        $receipt['addNVat'] = round(0, 2);
 
                         // print_r($receipt);
                         $this->data['receipt'] = $receipt;
@@ -1332,6 +1365,15 @@ class Touchpoint extends Admin_Controller
 
                         );
 
+                        $receipt['vatExempt'] = 0; // Regular transactions not VAT-exempt
+                        $receipt['lessVat'] = round(0, 2);
+                        $receipt['vatAmount'] = round($totalVat, 2);
+                        $receipt['vatableSales'] = round($vatableSale, 2);
+
+                        $receipt['netofdisc'] = number_format(0, 2);
+                        $receipt['netOfVat'] = number_format(0, 2);
+                        $receipt['addNVat'] = round(0, 2);
+
                         // print_r($receipt);
                         $this->data['voucherStatus'] = $status;
                         $this->data['receipt'] = $receipt;
@@ -1360,11 +1402,45 @@ class Touchpoint extends Admin_Controller
 
                         );
 
+                        $receipt['vatExempt'] = 0; // Regular transactions not VAT-exempt
+                        $receipt['lessVat'] = round(0, 2);
+                        $receipt['vatAmount'] = round($totalVat, 2);
+                        $receipt['vatableSales'] = round($vatableSale, 2);
+
+                        $receipt['netofdisc'] = number_format(0, 2);
+                        $receipt['netOfVat'] = number_format(0, 2);
+                        $receipt['addNVat'] = round(0, 2);
+
                         // print_r($receipt);
                         $this->data['voucherStatus'] = $status;
                         $this->data['receipt'] = $receipt;
                         $this->render_template("pos/failed_payment", $this->data);
                     } else {
+
+                        $companyId = 1;
+                        $ptuId = 1;
+                        $companyData = $this->model_touchpoint->getOrganization($companyId);
+                        $ptuData = $this->model_touchpoint->getPtu($ptuId);
+                        // echo "<script>console.log(" . json_encode($ptuData) . ");</script>";
+
+                        $company = array(
+                            'company' => $companyData['name'],
+                            'address' => $companyData['address'],
+                            'telephone' => $companyData['telephone'],
+                            'tin' => $companyData['TIN'],
+                            'min' => $companyData['MIN']
+                        );
+                        $ptu = array(
+                            'name' => $ptuData['name'],
+                            'vendor' => $ptuData['vendor'],
+                            'accreditation' => $ptuData['accredition'],
+                            'accreditDate' => $ptuData['accredit_date'],
+                            'validDate' => $ptuData['valid_date'],
+                            'serialNo' => $ptuData['BIR_SN'],
+                            'sn' => $ptuData['serial'],
+                            'issuedDate' => $ptuData['issued_date']
+                        );
+
                         $parkingData = array(
                             'id' => $this->input->post("parking_id"),
                             'paid_time' => $this->input->post("paymentTime"),
@@ -1406,6 +1482,24 @@ class Touchpoint extends Admin_Controller
                             'status' => 1
                         );
 
+                        $transactionsData['vat_exempt'] = number_format(0, 2);
+                        $transactionsData['less_vat'] = number_format(0, 2);
+                        $transactionsData['vat'] = number_format(0, 2);
+                        $transactionsData['vatable_sales'] = number_format(0, 2);
+                        $transactionsData['net_of_disc'] = number_format(0, 2);
+                        $transactionsData['net_of_vat'] = number_format(0, 2);
+                        $transactionsData['add_nvat'] = number_format(0, 2);
+
+                        $transactionsData['zero_rated'] = 0;
+                        $transactionsData['transact_status'] = 1;
+                        $transactionsData['non_vat'] = $nonVatSales;
+                        $transactionsData['paymode'] = $paymode;
+                        $transactionsData['status'] = 1;
+                        $transactionsData['min'] = $company['min'];
+                        $transactionsData['sn'] = $ptu['sn'];
+                        $transactionsData['ptu_num'] = $ptuData['BIR_SN'];
+                        $transactionsData['ptu_date'] = $ptuData['issued_date'];
+
                         $postTransaction = $this->model_touchpoint->createTransaction($transactionsData);
                         if ($postTransaction) {
                             $receipt = array(
@@ -1430,7 +1524,30 @@ class Touchpoint extends Admin_Controller
                                 'parkingCode' => $this->input->post("parking_code"),
                                 'vehicleClass' => $this->input->post("vehicleClass"),
 
+                                'ptuName' => $ptu['name'],
+                                'ptuVendor' => $ptu['vendor'],
+                                'ptuAccreditation' => $ptu['accreditation'],
+                                'ptuAccreditDate' => $ptu['accreditDate'],
+                                'ptuValidDate' => $ptu['validDate'],
+                                'ptuSerialNo' => $ptu['serialNo'],
+                                'ptuIssuedDate' => $ptu['issuedDate'],
+                                'ptuSN' => $ptu['sn'],
+
+                                'companyName' => $company['company'],
+                                'companyAddress' => $company['address'],
+                                'companyTelephone' => $company['telephone'],
+                                'companyTin' => $company['tin'],
+                                'companyMin' => $company['min']
                             );
+
+                            $receipt['vatExempt'] = 0; // Regular transactions not VAT-exempt
+                            $receipt['lessVat'] = round(0, 2);
+                            $receipt['vatAmount'] = round(0, 2);
+                            $receipt['vatableSales'] = round(0, 2);
+
+                            $receipt['netofdisc'] = number_format(0, 2);
+                            $receipt['netOfVat'] = number_format(0, 2);
+                            $receipt['addNVat'] = round(0, 2);
 
                             // print_r($receipt);
                             $this->data['receipt'] = $receipt;

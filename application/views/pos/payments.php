@@ -36,17 +36,21 @@
             </div>'; ?>
         <?php endif; ?>
 
-        <?php if ($this->session->flashdata('refund')) { ?>
-            <?php if ($this->session->flashdata('refund') === 'refund_success') {
-                    echo '<div class="alert alert-success">
+        <?php if ($this->session->flashdata('refund')): ?>
+            <?php 
+                $refundMessage = $this->session->flashdata('refund');
+                $this->session->unset_userdata('refund'); // Clear the flash data
+            ?>
+            <?php if ($refundMessage === 'refund_success'): ?>
+                <div class="alert alert-success">
                     <p>Refund was successful.</p>
-                    </div>';
-                } else if ($this->session->flashdata('refund') === 'refund_failed') {
-                    echo '<div class="alert alert-danger">
+                </div>
+            <?php elseif ($refundMessage === 'refund_failed'): ?>
+                <div class="alert alert-danger">
                     <p>Refund failed</p>
-                    </div>';
-                } ?>
-        <?php } ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -129,12 +133,7 @@
                 </form>
             </div>
 
-<!-- JavaScript Confirmation -->
-<script>
-    function confirmRefund() {
-        return confirm("Are you sure you want to refund?");
-    }
-</script>
+
 
             <!-- LOSS TICKET -->
             <!-- <div class="col-lg-4">
@@ -161,6 +160,12 @@
     </div>
 </div>
 
+<!-- JavaScript Confirmation -->
+<script>
+    function confirmRefund() {
+        return confirm("Are you sure you want to refund?");
+    }
+</script>
 <!-- JavaScript to remove alert after 10 seconds -->
 <script>
     setTimeout(function() {

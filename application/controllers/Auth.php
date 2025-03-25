@@ -55,7 +55,12 @@ class Auth extends Admin_Controller
            	if($email_exists == TRUE) {
            		$login = $this->model_auth->login($this->input->post('email'), $this->input->post('password'));
 				$balance = 0;
-				if($login['position']== 'cashier'){
+				if (!is_array($login) || !isset($login['position'])) {
+					$this->data['errors'] = 'Invalid login credentials';
+					$this->load->view('login', $this->data);
+					return;
+				}
+				if($login['position'] == 'cashier'){
 
 					// if(!empty($_POST["start_balance"])) {
 					// 	$balance =$this->input->post('start_balance');
@@ -91,6 +96,9 @@ class Auth extends Admin_Controller
 						$balance = $cashDrawer['remaining'];
 					}
 
+				} else {
+					$this->data['errors'] = 'You are not a cashier';
+           			$this->load->view('login', $this->data);
 				}
            		if($login) {
 					/* 

@@ -3,7 +3,8 @@
 class Model_touchpoint extends CI_Model
 {
     public function __construct()
-    {
+    {   
+        date_default_timezone_set('Asia/Manila');
         parent::__construct();
     }
 
@@ -11,7 +12,7 @@ class Model_touchpoint extends CI_Model
     {
         $startTime = strtotime('today midnight');
         $endTime = strtotime('tomorrow midnight') - 1;
-        $this->db->select('*'); 
+        $this->db->select('*');
         $this->db->where('terminal_id', $terminalId);
         $this->db->where('start_time >=', $startTime);
         $this->db->where('end_time <=', $endTime);
@@ -24,6 +25,24 @@ class Model_touchpoint extends CI_Model
             return false;
         }
     }
+
+    public function terminalDrawerCheck($terminalId)
+    {
+        // Format dates as strings matching VARCHAR format
+        $startTime = date('Y-m-d 00:00:00');    // Today at midnight
+        $endTime = date('Y-m-d 23:59:59');      // Today at end of the day
+
+        $this->db->select('*');                 // SELECT comes before FROM
+        $this->db->from('cash_drawer');         // Define the table
+        $this->db->where('terminal_id', $terminalId);
+        $this->db->where('start_time >=', $startTime);   // VARCHAR format comparison
+        $this->db->where('end_time <=', $endTime);       // VARCHAR format comparison
+
+        $query = $this->db->get();
+
+        return ($query->num_rows() > 0) ? $query->row_array() : false;
+    }
+
 
     public function getRecord($access, $code)
     {
@@ -113,6 +132,21 @@ class Model_touchpoint extends CI_Model
             return FALSE;
         }
     }
+
+    public function updateDrawerBalance($data)
+{
+    $startTime = strtotime('today midnight');
+    $endTime = strtotime('tomorrow midnight') - 1;
+    $terminalId = $data['terminal_id'];
+
+    // Use update directly with conditions
+    $this->db->where('terminal_id', $terminalId);
+    $this->db->where('start_time >=', $startTime);
+    $this->db->where('start_time <=', $endTime);
+    $query = $this->db->update('cash_drawer', $data);
+
+    return $query ? TRUE : FALSE;
+}
 
     public function getOrganization($id)
     {
@@ -247,9 +281,28 @@ class Model_touchpoint extends CI_Model
     }
 
     public function refundTransaction($uid, $siNumber)
-    {
+    {   
+        // First, retrieve the transaction record based on cashier id and OR number
+        $transaction = $this->db->select('*')
+            ->from('transactions')
+            ->where(['cashier_id' => $uid, 'ornumber' => $siNumber])
+            ->get()
+            ->row_array();
+
+        // If no record or no paid time, do not update
+        if (!$transaction) {
+            return false;
+        }
+        if (date('Y-m-d', $transaction['paid_time']) !== date('Y-m-d')) {
+            // print_r($transaction['paid_time']);
+            // print_r(date('Y-m-d'));
+            return false;
+        }
+
+        // Proceed with updating the transaction status to refunded (status 3)
         $this->db->where(['cashier_id' => $uid, 'ornumber' => $siNumber])
-                 ->update('transactions', ['transact_status' => 4]);
+            ->update('transactions', ['transact_status' => 3]);
+
         return $this->db->affected_rows() > 0;
     }
 
@@ -267,7 +320,8 @@ class Model_touchpoint extends CI_Model
         }
     }
 
-    public function getReceipt($ornumber) {
+    public function getReceipt($ornumber)
+    {
         $this->db->select("*");
         $this->db->from("transactions");
         $this->db->where("ornumber", $ornumber);
@@ -484,17 +538,21 @@ class Model_touchpoint extends CI_Model
         $this->db->where("start_time <=", $endTime);
         $cashDrawer = $this->db->get("cash_drawer")->row();
 
+        $this->db->select_sum("change");  
+        $this->db->where("cashier_id", $cashierId);  
+        $this->db->where("pid", $terminalId);  
+        $this->db->where("paid_time >=", $startTime);  
+        $this->db->where("paid_time <=", $endTime);  
+        $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
+        $totalChangeGiven = $this->db->get("transactions")->row()->change ?? 0;  
+
         $openingFund = $cashDrawer ? $cashDrawer->opening_fund : 0;
         $remainingFund = $cashDrawer ? $cashDrawer->remaining : 0;
 
         $lessWithdrawal = $totalWithdrawals ?? 0;
-
         $remaining = $openingFund + ($cashPayments ?? 0) - $lessWithdrawal;
-        $cashInDrawer = $remaining;
-
-        $x = ($openingFund + $totalPaymentsReceived) + $openingFund;
-        $shortOver = $x - $totalPaymentsReceived;
-        // $shortOver = $cashInDrawer - $remainingFund;
+        $cashInDrawer = $openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven;
+        $shortOver = $cashInDrawer - ($openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven);
 
         return [
             'beginOrNumber' => $beginOrNumber ?? 0,
@@ -516,14 +574,14 @@ class Model_touchpoint extends CI_Model
 
 
     public function getZreadingData($date, $cashierId, $terminalId)
-    {   
+    {
         $startTime = strtotime($date . ' 00:00:00');
         $endTime = strtotime($date . ' 23:59:59');
 
         $this->db->select_min("ornumber");
         $this->db->where("cashier_id", $cashierId);
         $this->db->where("pid", $terminalId);
-        $this->db->where("-paid_time >=", $startTime);
+        $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $beginOrNumber = $this->db->get("transactions")->row()->ornumber;
@@ -541,7 +599,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 2);
+        $this->db->where("transact_status", 2); // Beg Void
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $beginVoidOr = $this->db->get("transactions")->row()->ornumber;
 
@@ -550,7 +608,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 2);
+        $this->db->where("transact_status", 2); // End Void
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $endVoidOr = $this->db->get("transactions")->row()->ornumber;
 
@@ -559,7 +617,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 3);
+        $this->db->where("transact_status", 3); // Beg Return
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $beginReturnOr = $this->db->get("transactions")->row()->ornumber;
 
@@ -568,7 +626,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 3);
+        $this->db->where("transact_status", 3); // End Return
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $endReturnOr = $this->db->get("transactions")->row()->ornumber;
 
@@ -637,7 +695,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 3); // 3 indicates a return
+        $this->db->where("transact_status", 3); // 3 indicates a return/refund
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $returnAmount = $this->db->get("transactions")->row()->earned_amount ?? 0;
 
@@ -655,7 +713,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 4); // Refund transactions
+        $this->db->where("transact_status", 3); // Refund transactions
         $this->db->where("paymode <>", "Complimentary"); // Exclude Complimentary paymode
         $refundAmount = $this->db->get("transactions")->row()->amount ?? 0;
 
@@ -778,6 +836,15 @@ class Model_touchpoint extends CI_Model
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $seniorDiscountData = $this->db->get("transactions")->row();
 
+        $this->db->select_sum("change");  
+        $this->db->where("cashier_id", $cashierId);  
+        $this->db->where("pid", $terminalId);  
+        $this->db->where("paid_time >=", $startTime);  
+        $this->db->where("paid_time <=", $endTime);  
+        $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
+        $totalChangeGiven = $this->db->get("transactions")->row()->change ?? 0;  
+
+
         $seniorDiscount = $seniorDiscountData->discount ?? 0; // Total SC discount
         $seniorVAT = $seniorDiscountData->vat ?? 0;           // Associated VAT (if any)
 
@@ -793,18 +860,13 @@ class Model_touchpoint extends CI_Model
         $lessWithdrawal = $totalWithdrawals ?? 0;
 
         $remaining = $openingFund + ($cashPayments ?? 0) - $lessWithdrawal;
-        $cashInDrawer = $remaining;
+        $cashInDrawer = $openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven;
 
-        $x = ($openingFund + $totalPaymentsReceived) + $openingFund;
-        $shortOver = $x - $totalPaymentsReceived;
-        // $shortOver = $cashInDrawer - $remainingFund;
+        $shortOver = $cashInDrawer - ($openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven);
         $presentAccumulatedSales = $dailySales + $previousAccumulatedSales;
-        $grossAmount = $dailySales + $vatAmount;
-
-        $vatRate = 0.12; // 12% VAT
-        $lessVatAdjustment = ($discountAmount * $vatRate) / (1 + $vatRate);
-
-        $grossAmount = $grossAmount ?? 0;
+        
+        $lessVatAdjustment = 0;
+        $grossAmount = $vatableSales + $vatExempt + $vatAmount + $zeroRatedSales;
         $voidAmount = $voidAmount ?? 0;
         $refundAmount = $refundAmount ?? 0;
         $dailySales = $dailySales ?? 0;
@@ -856,6 +918,7 @@ class Model_touchpoint extends CI_Model
             'shortOver' => $shortOver ?? 0,
         ];
     }
+
 
     public function getDiscountsSummary($cid, $trmid, $startDate, $endDate)
     {
