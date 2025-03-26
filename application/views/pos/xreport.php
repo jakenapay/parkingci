@@ -20,7 +20,7 @@
                 <form action="<?php echo base_url("touchpoint/xreadingGenerate"); ?>" method="POST">
                     <div class="form-group">
                         <label for="date">Date</label>
-                        <input type="date" class="form-control" id="date" name="date" required>
+                        <input type="date" class="form-control" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <!-- <div class="form-group">
                         <label for="cashier">Cashier</label>

@@ -221,26 +221,23 @@
 
         <!-- Voucher Input Section -->
         <form action="<?php echo base_url("touchpoint/processTransaction"); ?>" method="POST">
-          <input type="hidden" name="parking_id" class="form-control" value="<?php echo $details['id']; ?>">
-          <input type="hidden" name="gate" class="form-control" value="<?php echo $details['gate']; ?>">
-          <input type="hidden" name="access_type" class="form-control" value="<?php echo $details['access_type']; ?>">
-          <input type="hidden" name="parking_code" class="form-control" value="<?php echo $details['parking_code']; ?>">
-          <input type="hidden" name="parkingStay" class="form-control" value="<?php echo $details['parkingStay']; ?>">
-          <input type="hidden" name="entryTime" class="form-control" value="<?php echo $details['entryTime']; ?>">
-          <input type="hidden" name="paymentTime" class="form-control" value="<?php echo $details['paymentTime']; ?>">
-          <input type="hidden" name="parkingTime" class="form-control" value="<?php echo $details['parkingTime']; ?>">
-          <input type="hidden" name="vehicleClass" class="form-control" value="<?php echo $details['vehicleClass']; ?>">
-          <input type="hidden" name="parking_status" class="form-control"
-            value="<?php echo $details['parking_status']; ?>">
-          <input type="hidden" name="parking_amount" class="form-control"
-            value="<?php echo $details['parking_amount']; ?>">
-          <input type="hidden" name="pictureName" class="form-control" value="<?php echo $details['pictureName']; ?>">
-          <input type="hidden" name="picturePath" class="form-control" value="<?php echo $details['picturePath']; ?>">
-          <input type="hidden" name="pictureName" class="form-control" value="<?php echo $details['pictureName']; ?>">
-          <input type="hidden" name="discount_type" class="form-control"
-            value="<?php echo $details['discountType']; ?>">
-          <input type="hidden" name="total_sales" class="form-control" value="<?php echo $details['totalSales']; ?>">
-          <input type="hidden" name="paymentmode" class="form-control" value="<?php echo $details['paymode']; ?>">
+            <input type="text" name="parking_id" class="form-control" value="<?php echo $details['id']; ?>">
+            <input type="text" name="gate" class="form-control" value="<?php echo $details['gate']; ?>">
+            <input type="text" name="access_type" class="form-control" value="<?php echo $details['access_type']; ?>">
+            <input type="text" name="parking_code" class="form-control" value="<?php echo $details['parking_code']; ?>">
+            <input type="text" name="parkingStay" class="form-control" value="<?php echo $details['parkingStay']; ?>">
+            <input type="text" name="entryTime" class="form-control" value="<?php echo $details['entryTime']; ?>">
+            <input type="text" name="paymentTime" class="form-control" value="<?php echo $details['paymentTime']; ?>">
+            <input type="text" name="parkingTime" class="form-control" value="<?php echo $details['parkingTime']; ?>">
+            <input type="text" name="vehicleClass" class="form-control" value="<?php echo $details['vehicleClass']; ?>">
+            <input type="text" name="parking_status" class="form-control" value="<?php echo $details['parking_status']; ?>">
+            <input type="text" name="parking_amount" class="form-control" value="<?php echo $details['parking_amount']; ?>">
+            <input type="text" name="pictureName" class="form-control" value="<?php echo $details['pictureName']; ?>">
+            <input type="text" name="picturePath" class="form-control" value="<?php echo $details['picturePath']; ?>">
+            <input type="text" name="pictureName" class="form-control" value="<?php echo $details['pictureName']; ?>">
+            <input type="text" name="discount_type" class="form-control" value="<?php echo $details['discountType']; ?>">
+            <input type="text" name="total_sales" class="form-control" value="<?php echo $details['totalSales']; ?>">
+            <input type="text" name="paymentmode" class="form-control" value="<?php echo $details['paymode']; ?>">
           <div class="voucher-input-section">
             <div class="input-group">
               <label>Enter Voucher Code</label>

@@ -221,7 +221,7 @@
      <form action="<?php echo base_url("demo/transactPayment"); ?>" method="POST">
      <input type="hidden" name="parking_id" class="form-control" value="<?php echo $details['id']; ?>">
                     <input type="hidden" name="gate" class="form-control" value="<?php echo $details['gate']; ?>">
-                    <input type="hidden" name="access_type" class="form-control"
+                    <input type="text" name="access_type" class="form-control"
                         value="<?php echo $details['access_type']; ?>">
                     <input type="hidden" name="parking_code" class="form-control"
                         value="<?php echo $details['parking_code']; ?>">

@@ -20,20 +20,30 @@
                 <form action="<?php echo base_url("touchpoint/ejournalGenerate"); ?>" method="POST">
                     <div class="form-group">
                         <label for="start-date">Start Date</label>
-                        <input type="date" class="form-control" id="start-date" name="start_date" required>
+                        <input type="date" class="form-control" id="start-date" name="start_date" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="end-date">End Date</label>
                         <input type="date" class="form-control" id="end-date" name="end_date" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="cashier">Cashier</label>
                         <select class="form-control" id="cashier" name="cashier" required>
                             <option selected disabled>Select Cashier</option>
                             <?php foreach($cashiers as $c): ?>
                                 <option value="<?php echo $c['id']; ?>"><?php echo $c['username']; ?></option>
                             <?php endforeach; ?>
-                            <!-- Add other cashier options as needed -->
+                        </select>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="cashier">Cashier</label>
+                        <select class="form-control text-capitalize" id="cashier" name="cashier" required>
+                            <option selected disabled>Select Cashier</option>
+                            <?php foreach ($cashiers as $c): ?>
+                                <option class="text-capitalize" value="<?php echo $c['id']; ?>" <?php echo ($c['id'] == $this->session->userdata('id')) ? 'selected' : ''; ?>>
+                                    <?php echo $c['username']; ?>    <?php echo ($c['id'] == $this->session->userdata('id')) ? ' (You)' : ''; ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">

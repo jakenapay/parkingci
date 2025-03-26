@@ -569,6 +569,7 @@ class Model_touchpoint extends CI_Model
             'openingFund' => $openingFund,
             'remaining' => $remaining,
             'shortOver' => $shortOver ?? 0,
+            'totalChange' => $totalChangeGiven,
         ];
     }
 
@@ -916,6 +917,7 @@ class Model_touchpoint extends CI_Model
             'openingFund' => $openingFund,
             'remaining' => $remaining,
             'shortOver' => $shortOver ?? 0,
+            'totalChange' => $totalChangeGiven,
         ];
     }
 

@@ -201,6 +201,10 @@
                             <td><?php echo number_format($xreading['totalPaymentsReceived'], 2) ?></td>
                         </tr>
                         <tr>
+                            <th>Total Change</th>
+                            <td><?php echo number_format($xreading['totalChange'], 2) ?></td>
+                        </tr>
+                        <tr>
                             <th>Short / Over</th>
                             <td><?php echo number_format($xreading['shortOver'], 2) ?></td>
                         </tr>
@@ -466,6 +470,10 @@
                             <div style="display: flex; justify-content: space-between;">
                                 <span><strong>Payments Received:</strong></span>
                                 <span id="totalPaymentsReceivedDrawer"></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span><strong>Total Change:</strong></span>
+                                <span id="totalChange"></span>
                             </div>
                         </div>
                         ======================================================================
@@ -970,6 +978,11 @@
                     " ".repeat(48 - "Payments Received:".length - parseFloat(xreadingData.totalPaymentsReceived).toFixed(2).length) +
                     parseFloat(xreadingData.totalPaymentsReceived).toFixed(2)
                 )
+                .text(
+                    "Total Change:" +
+                    " ".repeat(48 - "Total Change:".length - parseFloat(xreadingData.totalChange).toFixed(2).length) +
+                    parseFloat(xreadingData.totalChange).toFixed(2)
+                )
                 .text("================================================") // Divider
                 .text(
                     "SHORT/OVER:" +
@@ -1073,7 +1086,7 @@
         document.getElementById("openingFundDrawer").textContent = xreadingData.openingFund;
         document.getElementById("lessWithdrawal").textContent = xreadingData.lessWithdrawal;
         document.getElementById("totalPaymentsReceivedDrawer").textContent = parseFloat(xreadingData.totalPaymentsReceived).toFixed(2);
-
+        document.getElementById("totalChange").textContent = parseFloat(xreadingData.totalChange).toFixed(2);
         document.getElementById("shortOver").textContent = parseFloat(xreadingData.shortOver).toFixed(2);
     }
 

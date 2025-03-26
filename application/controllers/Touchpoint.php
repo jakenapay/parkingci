@@ -1279,7 +1279,7 @@ class Touchpoint extends Admin_Controller
                         'totalSales' => $this->input->post("total_sales")
                     );
 
-                    $code = $this->input->post("compcode");
+                    $code = trim($this->input->post("compcode"));
                     $OR = sprintf('%06d', 000000 + 1);
                     $verifyCode = $this->model_touchpoint->getComplimentary($code);
                     $currentDate = date('Y-m-d');
@@ -1374,7 +1374,7 @@ class Touchpoint extends Admin_Controller
                         $receipt['netOfVat'] = number_format(0, 2);
                         $receipt['addNVat'] = round(0, 2);
 
-                        // print_r($receipt);
+                        print_r($receipt);
                         $this->data['voucherStatus'] = $status;
                         $this->data['receipt'] = $receipt;
                         $this->render_template("pos/failed_payment", $this->data);
@@ -1411,12 +1411,12 @@ class Touchpoint extends Admin_Controller
                         $receipt['netOfVat'] = number_format(0, 2);
                         $receipt['addNVat'] = round(0, 2);
 
-                        // print_r($receipt);
+                        print_r($receipt);
                         $this->data['voucherStatus'] = $status;
                         $this->data['receipt'] = $receipt;
                         $this->render_template("pos/failed_payment", $this->data);
                     } else {
-
+                        // echo "Success";
                         $companyId = 1;
                         $ptuId = 1;
                         $companyData = $this->model_touchpoint->getOrganization($companyId);
@@ -1499,7 +1499,7 @@ class Touchpoint extends Admin_Controller
                         $transactionsData['sn'] = $ptu['sn'];
                         $transactionsData['ptu_num'] = $ptuData['BIR_SN'];
                         $transactionsData['ptu_date'] = $ptuData['issued_date'];
-
+                        print_r($transactionsData);
                         $postTransaction = $this->model_touchpoint->createTransaction($transactionsData);
                         if ($postTransaction) {
                             $receipt = array(
@@ -1549,11 +1549,12 @@ class Touchpoint extends Admin_Controller
                             $receipt['netOfVat'] = number_format(0, 2);
                             $receipt['addNVat'] = round(0, 2);
 
-                            // print_r($receipt);
+                            print_r($receipt);
                             $this->data['receipt'] = $receipt;
                             $this->data['receiptData'] = json_encode($receipt);
                             $this->render_template("pos/success_payment", $this->data);
                         } else {
+                            echo "Failed";
                             $details = array(
                                 'id' => $this->input->post("parking_id"),
                                 'gate' => $this->input->post("gate"),
