@@ -788,12 +788,12 @@ class Touchpoint extends Admin_Controller
                         );
                         $this->model_touchpoint->updateCompany($updateComp);
 
-                        echo $remainingBalance;
-                        echo "<br>";
-                        echo $transactionsData['earned_amount'];
-                        echo "<br>";
+                        // echo $remainingBalance;
+                        // echo "<br>";
+                        // echo $transactionsData['earned_amount'];
+                        // echo "<br>";
                         $remainingBalance = $remainingBalance + $transactionsData['earned_amount'];
-                        echo $remainingBalance;
+                        // echo $remainingBalance;
                         $remainingData = array('terminal_id' => $terminalId, 'id' => $cashDrawer['id'], 'remaining' => $remainingBalance);
                         $this->model_touchpoint->updateDrawerBalance($remainingData);
 

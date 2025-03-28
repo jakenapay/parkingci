@@ -116,7 +116,7 @@
                     <div class="small-box bg-yellow">
                         <div class="inner">
                             <h3>Refund</h3>
-                            <p>Refund a transaction</p>
+                            <p>Refund with SI Number</p>
                             <input type="hidden" class="form-control" name="accessEntry" value="Lost" disabled>
                             <input type="text" class="form-control" id="parkingCode" name="code" placeholder="XXXXXX"
                                 required autocomplete="off">

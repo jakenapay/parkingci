@@ -510,7 +510,7 @@ class Model_touchpoint extends CI_Model
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $paymayaPayments = $this->db->get("transactions")->row()->earned_amount;
 
-        $totalPaymentsReceived = ($cashPayments ?? 0) + ($gcashPayments ?? 0) + ($paymayaPayments ?? 0);
+        
 
         $this->db->select_sum("earned_amount");
         $this->db->where("cashier_id", $cashierId);
@@ -521,7 +521,14 @@ class Model_touchpoint extends CI_Model
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $voidAmount = $this->db->get("transactions")->row()->earned_amount;
 
-        $refundAmount = 0;
+        $this->db->select_sum("earned_amount");
+        $this->db->where("cashier_id", $cashierId);
+        $this->db->where("pid", $terminalId);
+        $this->db->where("paid_time >=", $startTime);
+        $this->db->where("paid_time <=", $endTime);
+        $this->db->where("transact_status", 3);
+        $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
+        $refundAmount = $this->db->get("transactions")->row()->earned_amount; // get the total refundAmount from the earned amount
 
         $this->db->select_sum("amount");
         $this->db->where("cashier_id", $cashierId);
@@ -551,8 +558,10 @@ class Model_touchpoint extends CI_Model
 
         $lessWithdrawal = $totalWithdrawals ?? 0;
         $remaining = $openingFund + ($cashPayments ?? 0) - $lessWithdrawal;
-        $cashInDrawer = $openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven;
-        $shortOver = $cashInDrawer - ($openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven);
+        $cashInDrawer = $openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven - $refundAmount;
+        $shortOver = $cashInDrawer - ($openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven - $refundAmount);
+
+        $totalPaymentsReceived = ($cashPayments ?? 0) + ($gcashPayments ?? 0) + ($paymayaPayments ?? 0) - ($voidAmount ?? 0) - ($refundAmount ?? 0);
 
         return [
             'beginOrNumber' => $beginOrNumber ?? 0,
@@ -709,14 +718,14 @@ class Model_touchpoint extends CI_Model
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $voidAmount = $this->db->get("transactions")->row()->earned_amount ?? 0;
 
-        $this->db->select_sum("amount"); // Correct column for total refunded amount
+        $this->db->select_sum("earned_amount");
         $this->db->where("cashier_id", $cashierId);
         $this->db->where("pid", $terminalId);
         $this->db->where("paid_time >=", $startTime);
         $this->db->where("paid_time <=", $endTime);
-        $this->db->where("transact_status", 3); // Refund transactions
-        $this->db->where("paymode <>", "Complimentary"); // Exclude Complimentary paymode
-        $refundAmount = $this->db->get("transactions")->row()->amount ?? 0;
+        $this->db->where("transact_status", 3);
+        $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
+        $refundAmount = $this->db->get("transactions")->row()->earned_amount; // get the total refundAmount from the earned amount
 
         $this->db->select_sum("discount");
         $this->db->where("cashier_id", $cashierId);
@@ -753,8 +762,6 @@ class Model_touchpoint extends CI_Model
         $this->db->where("paymode", "Paymaya");
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $paymayaPayments = $this->db->get("transactions")->row()->earned_amount;
-
-        $totalPaymentsReceived = ($cashPayments ?? 0) + ($gcashPayments ?? 0) + ($paymayaPayments ?? 0);
 
         $this->db->select_sum("earned_amount");
         $this->db->where("cashier_id", $cashierId);
@@ -810,8 +817,6 @@ class Model_touchpoint extends CI_Model
         $this->db->where("paymode <>", "Complimentary");  // Exclude Complimentary paymode
         $tenantDiscounts = $this->db->get("transactions")->row()->discount;
 
-        $refundAmount = 0;
-
         $this->db->select_sum("amount");
         $this->db->where("cashier_id", $cashierId);
         $this->db->where("terminal_id", $terminalId);
@@ -854,16 +859,16 @@ class Model_touchpoint extends CI_Model
             $vatAdjustment = $seniorVAT; // Ensure we don't exceed the VAT collected
         }
 
-
+        $totalPaymentsReceived = ($cashPayments ?? 0) + ($gcashPayments ?? 0) + ($paymayaPayments ?? 0) - ($voidAmount ?? 0) - ($refundAmount ?? 0);
         $openingFund = $cashDrawer ? $cashDrawer->opening_fund : 0;
         $remainingFund = $cashDrawer ? $cashDrawer->remaining : 0;
 
         $lessWithdrawal = $totalWithdrawals ?? 0;
 
         $remaining = $openingFund + ($cashPayments ?? 0) - $lessWithdrawal;
-        $cashInDrawer = $openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven;
+        $cashInDrawer = $openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven - $refundAmount;
 
-        $shortOver = $cashInDrawer - ($openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven);
+        $shortOver = $cashInDrawer - ($openingFund + $cashPayments - $lessWithdrawal - $totalChangeGiven - $refundAmount);
         $presentAccumulatedSales = $dailySales + $previousAccumulatedSales;
         
         $lessVatAdjustment = 0;
